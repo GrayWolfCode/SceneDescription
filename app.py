@@ -2,11 +2,14 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS  # <- Add this import
 import openai
 import json
+import os
+import io
 app = Flask(__name__)
 CORS(app)  # <- Add this to enable CORS for all routes
 
 # Ideally, store this securely using environment variables
-OPENAI_API_KEY = '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'
+OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
+
 
 
 @app.route('/story', methods=['POST'])

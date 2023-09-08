@@ -16,7 +16,7 @@ def divide_text():
  data = request.json
  datas = data['ideas']
  divided_text = datas + \
- f"The above sentences are main story that I 'm going to build. Please generate a Json string of two key two value-one key is 'descriptions' and the value is the list of 6 number of comic book panel descriptions. Do not include any label or header that indicate the order of the panels. Only the caption descriptions should be a completed paragraph. the second key is 'scenes' and the second value is the same, but if there are characters, please change the character 's name into the famous celebrities name. "
+ f"The above sentences are main story that I 'm going to build. Please generate a Json string of two key two value-one key is 'descriptions' and the corresponding value is the list of {data['number']} number of comic book panel descriptions. Do not include any label or header that indicate the order of the panels. Only the caption descriptions should be a completed paragraph. the second key is 'scenes' and the value is the same as the first value' s but the character 's name will be replaced by one famous celebrities full name. "
  try:
  openai.api_key = OPENAI_API_KEY
  response = openai.ChatCompletion.create(

@@ -11,7 +11,6 @@ CORS(app)  # <- Add this to enable CORS for all routes
 OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
 
 
-
 @app.route('/story', methods=['POST'])
 def divide_text():
     data = request.json
@@ -28,8 +27,7 @@ def divide_text():
             ]
         )
         response_message = response.choices[0].message['content']
-        scene_content = json.loads(response_message)['scenes']
-        return scene_content
+        return response_message
 
     except Exception as e:
         return jsonify({'message': 'Error occurred. Please try again.'}), 500

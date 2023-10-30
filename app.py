@@ -9,14 +9,22 @@ CORS(app)  # <- Add this to enable CORS for all routes
 
 # Ideally, store this securely using environment variables
 OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
+def format_story(input_string):
+    sentences = input_string.split("#")
+    formatted_story = ""
+    
+    for index, sentence in enumerate(sentences):
+        if sentence:  # Check if the sentence is not empty
+            formatted_story += f"Scene {index + 1} {sentence.strip()} "
 
+    return formatted_story.strip()
 
 @app.route('/story', methods=['POST'])
 def divide_text():
     data = request.json
     datas = data['ideas']
-    divided_text = datas + \
-        f"The above sentences are main story that I 'm going to build. Please generate a Json string of two key two value-one key is 'descriptions' and the corresponding value is the list of {data['number']} number of comic book panel descriptions. Do not include any label or header that indicate the order of the panels. Only the caption descriptions should be a completed paragraph. the second key is 'scenes' and the value is the same as the first value' s but the character 's name will be replaced by one famous celebrities full name."
+    divided_text = format_story(datas) + \
+        f"Please generate a Json string of one key one value-The key is 'scenes' and the value is the list of scene description but the character 's name will be replaced by one famous celebrities full name."
     try:
         openai.api_key = OPENAI_API_KEY
         response = openai.ChatCompletion.create(
